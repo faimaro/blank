@@ -25,10 +25,10 @@ export const Branches: CollectionConfig = {
       defaultValue: true, // Por defecto está activa
     },
     {
-      name: 'name',
+      name: 'comercio',
       type: 'relationship',
       label: 'Merchant',
-      relationTo: ['merchants' as const], // Slug de la colección de comerciantes
+      relationTo: 'merchants', // Slug de la colección de comerciantes
       required: true, // Relación obligatoria
     },
   ],
