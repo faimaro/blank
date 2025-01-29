@@ -9,6 +9,7 @@
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    merchants: MerchantAuthOperations;
   };
   collections: {
     users: User;
@@ -35,15 +36,37 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user:
+    | (User & {
+        collection: 'users';
+      })
+    | (Merchant & {
+        collection: 'merchants';
+      });
   jobs: {
     tasks: unknown;
     workflows: unknown;
   };
 }
 export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+export interface MerchantAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -104,12 +127,19 @@ export interface Media {
 export interface Merchant {
   id: string;
   name: string;
-  email: string;
   phone?: string | null;
   address?: string | null;
   isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -148,10 +178,15 @@ export interface PayloadLockedDocument {
         value: string | Branch;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'merchants';
+        value: string | Merchant;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -161,10 +196,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: string;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'merchants';
+        value: string | Merchant;
+      };
   key?: string | null;
   value?:
     | {
@@ -228,12 +268,18 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface MerchantsSelect<T extends boolean = true> {
   name?: T;
-  email?: T;
   phone?: T;
   address?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
