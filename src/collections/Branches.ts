@@ -24,6 +24,13 @@ export const Branches: CollectionConfig = {
       label: '¿Está Activa?',
       defaultValue: true, // Por defecto está activa
     },
+    {
+      name: 'comercio',
+      type: 'relationship',
+      relationTo: 'merchants', // Solución temporal para tipado
+      label: 'Merchant',
+      required: false,
+    }
     
   ],
 };
