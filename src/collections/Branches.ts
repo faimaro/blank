@@ -29,7 +29,7 @@ export const Branches: CollectionConfig = {
       type: 'relationship',
       label: 'Merchant',
       relationTo: 'merchants', // Slug de la colección de comerciantes
-      required: true, // Relación obligatoria
+      //required: true, // Relación obligatoria
     },
   ],
 };
