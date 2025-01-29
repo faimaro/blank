@@ -24,13 +24,7 @@ export const Branches: CollectionConfig = {
       label: '¿Está Activa?',
       defaultValue: true, // Por defecto está activa
     },
-    {
-      name: 'merchants',
-      type: 'relationship',
-      label: 'merchants',
-      relationTo: 'merchants', // Slug de la colección de comerciantes
-      //required: true, // Relación obligatoria
-    },
+    
   ],
 };
 
