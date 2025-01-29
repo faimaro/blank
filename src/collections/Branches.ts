@@ -28,7 +28,7 @@ export const Branches: CollectionConfig = {
       name: 'name',
       type: 'relationship',
       label: 'Merchant',
-      relationTo: 'merchants', // Slug de la colección de comerciantes
+      relationTo: ['merchants' as const], // Slug de la colección de comerciantes
       required: true, // Relación obligatoria
     },
   ],
