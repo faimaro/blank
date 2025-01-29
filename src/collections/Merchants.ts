@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload';
 export const Merchants: CollectionConfig = {
   slug: 'merchants',
   admin: {
-    useAsTitle: 'merchants', // El campo que se usará como título en el admin
+    useAsTitle: 'name', // El campo que se usará como título en el admin
   },
   fields: [
     {
