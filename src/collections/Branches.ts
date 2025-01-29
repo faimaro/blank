@@ -27,9 +27,9 @@ export const Branches: CollectionConfig = {
     {
       name: 'comercio',
       type: 'relationship',
-      relationTo: 'merchants', // Solución temporal para tipado
+      relationTo: 'merchants', // relacion
       label: 'comercio',
-      required: false,
+      required: true,
     },
     
   ],
