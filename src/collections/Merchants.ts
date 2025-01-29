@@ -5,6 +5,7 @@ export const Merchants: CollectionConfig = {
   admin: {
     useAsTitle: 'name', // El campo que se usará como título en el admin
   },
+  auth: true,
   fields: [
     {
       name: 'name',
