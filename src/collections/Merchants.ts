@@ -38,4 +38,4 @@ export const Merchants: CollectionConfig = {
   ],
 };
 
-export default Merchants;
+
