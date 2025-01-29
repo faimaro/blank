@@ -17,6 +17,7 @@ export interface Config {
     merchants: Merchant;
     branches: Branch;
     categories: Category;
+    plates: Plate;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -28,6 +29,7 @@ export interface Config {
     merchants: MerchantsSelect<false> | MerchantsSelect<true>;
     branches: BranchesSelect<false> | BranchesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    plates: PlatesSelect<false> | PlatesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -175,6 +177,27 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "plates".
+ */
+export interface Plate {
+  id: string;
+  name: string;
+  showName?: string | null;
+  description?: string | null;
+  isActive?: boolean | null;
+  isVisibleInMenu?: boolean | null;
+  platOrder?: number | null;
+  withImage?: boolean | null;
+  hasIndicators?: boolean | null;
+  category: string | Category;
+  imageURL?: string | null;
+  fileName?: string | null;
+  price: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -199,6 +222,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'plates';
+        value: string | Plate;
       } | null);
   globalSlug?: string | null;
   user:
@@ -329,6 +356,26 @@ export interface CategoriesSelect<T extends boolean = true> {
   hasIndicators?: T;
   visibleInMenu?: T;
   branch?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "plates_select".
+ */
+export interface PlatesSelect<T extends boolean = true> {
+  name?: T;
+  showName?: T;
+  description?: T;
+  isActive?: T;
+  isVisibleInMenu?: T;
+  platOrder?: T;
+  withImage?: T;
+  hasIndicators?: T;
+  category?: T;
+  imageURL?: T;
+  fileName?: T;
+  price?: T;
   updatedAt?: T;
   createdAt?: T;
 }
