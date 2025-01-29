@@ -16,6 +16,7 @@ export interface Config {
     media: Media;
     merchants: Merchant;
     branches: Branch;
+    categories: Category;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -26,6 +27,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     merchants: MerchantsSelect<false> | MerchantsSelect<true>;
     branches: BranchesSelect<false> | BranchesSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -156,6 +158,23 @@ export interface Branch {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  name: string;
+  showName?: string | null;
+  description?: string | null;
+  isActive?: boolean | null;
+  catOrder?: number | null;
+  hasIndicators?: boolean | null;
+  visibleInMenu?: boolean | null;
+  branch: string | Branch;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -176,6 +195,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'branches';
         value: string | Branch;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
       } | null);
   globalSlug?: string | null;
   user:
@@ -290,6 +313,22 @@ export interface BranchesSelect<T extends boolean = true> {
   address?: T;
   isActive?: T;
   comercio?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  showName?: T;
+  description?: T;
+  isActive?: T;
+  catOrder?: T;
+  hasIndicators?: T;
+  visibleInMenu?: T;
+  branch?: T;
   updatedAt?: T;
   createdAt?: T;
 }
