@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload';
 
-export const Merchant: CollectionConfig = {
-  slug: 'merchant',
+export const Merchants: CollectionConfig = {
+  slug: 'merchants',
   admin: {
-    useAsTitle: 'merchant', // El campo que se usará como título en el admin
+    useAsTitle: 'merchants', // El campo que se usará como título en el admin
   },
   fields: [
     {
@@ -38,4 +38,4 @@ export const Merchant: CollectionConfig = {
   ],
 };
 
-export default Merchant;
+export default Merchants;
