@@ -11,7 +11,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Merchants } from './collections/Merchants'
 import { Branches } from './collections/Branches'
-import Categories from './collections/Categories'
+import {Categories} from './collections/Categories'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
