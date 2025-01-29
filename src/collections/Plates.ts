@@ -77,8 +77,8 @@ export const Plates: CollectionConfig = {
       name: 'price',
       type: 'number',
       label: 'Price',
-      required: true, // Campo obligatorio
-      validate: (value) => value >= 0 || 'El precio debe ser mayor o igual a 0', // Validación para que el precio no sea negativo
+      required: true, // Campo obligatorio,
+      validate: (value: any) => value >= 0 || 'El precio debe ser mayor o igual a 0' 
     },
   ],
 };
