@@ -25,10 +25,10 @@ export const Branches: CollectionConfig = {
       defaultValue: true, // Por defecto está activa
     },
     {
-      name: 'user',
+      name: 'comercio',
       type: 'relationship',
-      relationTo: 'users', // Solución temporal para tipado
-      label: 'usuario',
+      relationTo: 'merchants', // Solución temporal para tipado
+      label: 'comercio',
       required: false,
     },
     
