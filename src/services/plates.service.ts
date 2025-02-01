@@ -82,4 +82,40 @@ export class PlatesService {
       },
     })
   }
+
+  static async update(id: string, data: Partial<Plate>): Promise<Plate | null> {
+    try {
+      if (!id.trim()) throw new Error('Invalid ID')
+      if (!data || Object.keys(data).length === 0) throw new Error('No data provided')
+
+      const payload = await this.getPayloadClient()
+      const updatedPlate = await payload.update({
+        collection: 'plates',
+        id,
+        data,
+      })
+
+      return updatedPlate as Plate
+    } catch (error) {
+      console.error(`Error updating plate (${id}):`, error)
+      return null
+    }
+  }
+
+  static async delete(id: string): Promise<boolean> {
+    try {
+      if (!id.trim()) throw new Error('Invalid ID')
+
+      const payload = await this.getPayloadClient()
+      await payload.delete({
+        collection: 'plates',
+        id,
+      })
+
+      return true
+    } catch (error) {
+      console.error(`Error deleting plate (${id}):`, error)
+      return false
+    }
+  }
 }
