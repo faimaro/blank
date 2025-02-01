@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
 
 export const Plates: CollectionConfig = {
   slug: 'plates',
@@ -6,7 +6,7 @@ export const Plates: CollectionConfig = {
     useAsTitle: 'name', // Usamos el campo 'name' como título en el admin
   },
   access: {
-    read: () => false, // Cualquier usuario puede leer los datos
+    read: () => true, // Cualquier usuario puede leer los datos
     create: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden crear
     update: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden actualizar
     delete: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden eliminar
@@ -84,9 +84,9 @@ export const Plates: CollectionConfig = {
       type: 'number',
       label: 'Price',
       required: true, // Campo obligatorio,
-      validate: (value: any) => value >= 0 || 'El precio debe ser mayor o igual a 0' 
+      validate: (value: any) => value >= 0 || 'El precio debe ser mayor o igual a 0',
     },
   ],
-};
+}
 
-export default Plates;
+export default Plates
