@@ -15,10 +15,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: 'Plate not found' }, { status: 404 })
     }
 
-    const response = NextResponse.json(plate)
-    response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate')
-
-    return response
+    return NextResponse.json(plate)
   } catch (error: any) {
     console.error(`Error fetching plate with ID ${params.id}:`, error?.message)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
