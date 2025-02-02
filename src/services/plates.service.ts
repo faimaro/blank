@@ -83,6 +83,44 @@ export class PlatesService {
     })
   }
 
+  static async findByName(name: string) {
+    try {
+      if (!name.trim()) throw new Error('Invalid name')
+
+      const payload = await this.getPayloadClient()
+      return await payload.find({
+        collection: 'plates',
+        where: {
+          name: {
+            contains: name,
+          },
+        },
+      })
+    } catch (error: any) {
+      console.error(`Error in findByName (${name}):`, error?.message)
+      return { docs: [], totalDocs: 0, totalPages: 0, page: 1 }
+    }
+  }
+
+  static async findByBranches(branchId: string) {
+    try {
+      if (!branchId.trim()) throw new Error('Invalid branch ID')
+
+      const payload = await this.getPayloadClient()
+      return await payload.find({
+        collection: 'plates',
+        where: {
+          branch: {
+            equals: branchId,
+          },
+        },
+      })
+    } catch (error: any) {
+      console.error(`Error in findByBranches (${branchId}):`, error?.message)
+      return { docs: [], totalDocs: 0, totalPages: 0, page: 1 }
+    }
+  }
+
   static async update(id: string, data: Partial<Plate>): Promise<Plate | null> {
     try {
       if (!id.trim()) throw new Error('Invalid ID')
