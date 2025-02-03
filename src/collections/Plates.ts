@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload';
 
 export const Plates: CollectionConfig = {
   slug: 'plates',
@@ -83,10 +83,28 @@ export const Plates: CollectionConfig = {
       name: 'price',
       type: 'number',
       label: 'Price',
-      required: true, // Campo obligatorio,
+      required: true, // Campo obligatorio
       validate: (value: any) => value >= 0 || 'El precio debe ser mayor o igual a 0',
     },
+    // Nueva relación: Sizes
+    {
+      name: 'sizes',
+      type: 'relationship',
+      relationTo: 'sizes', // Relación con la colección `sizes`
+      hasMany: true, // Un plato puede tener muchos tamaños
+      label: 'Tamaños Disponibles',
+      required: false, // Opcional
+    },
+    // Nueva relación: Garnish Groups
+    {
+      name: 'garnishGroups',
+      type: 'relationship',
+      relationTo: 'garnish-groups', // Relación con la colección `garnish-groups`
+      hasMany: true, // Un plato puede tener muchos grupos de guarniciones
+      label: 'Grupos de Guarniciones',
+      required: false, // Opcional
+    },
   ],
-}
+};
 
-export default Plates
+export default Plates;

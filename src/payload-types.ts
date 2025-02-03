@@ -18,6 +18,9 @@ export interface Config {
     branches: Branch;
     categories: Category;
     plates: Plate;
+    sizes: Size;
+    garnishes: Garnish;
+    'garnish-groups': GarnishGroup;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -30,6 +33,9 @@ export interface Config {
     branches: BranchesSelect<false> | BranchesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     plates: PlatesSelect<false> | PlatesSelect<true>;
+    sizes: SizesSelect<false> | SizesSelect<true>;
+    garnishes: GarnishesSelect<false> | GarnishesSelect<true>;
+    'garnish-groups': GarnishGroupsSelect<false> | GarnishGroupsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -193,6 +199,49 @@ export interface Plate {
   imageURL?: string | null;
   fileName?: string | null;
   price: number;
+  sizes?: (string | Size)[] | null;
+  garnishGroups?: (string | GarnishGroup)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizes".
+ */
+export interface Size {
+  id: string;
+  isVisibleInMenu?: boolean | null;
+  name: string;
+  price: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garnish-groups".
+ */
+export interface GarnishGroup {
+  id: string;
+  name: string;
+  description?: string | null;
+  mandatory?: boolean | null;
+  maxQuantity?: number | null;
+  minQuantity?: number | null;
+  multipleSelection?: boolean | null;
+  garnishes?: (string | Garnish)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garnishes".
+ */
+export interface Garnish {
+  id: string;
+  name: string;
+  description?: string | null;
+  price: number;
+  image?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -226,6 +275,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'plates';
         value: string | Plate;
+      } | null)
+    | ({
+        relationTo: 'sizes';
+        value: string | Size;
+      } | null)
+    | ({
+        relationTo: 'garnishes';
+        value: string | Garnish;
+      } | null)
+    | ({
+        relationTo: 'garnish-groups';
+        value: string | GarnishGroup;
       } | null);
   globalSlug?: string | null;
   user:
@@ -376,6 +437,46 @@ export interface PlatesSelect<T extends boolean = true> {
   imageURL?: T;
   fileName?: T;
   price?: T;
+  sizes?: T;
+  garnishGroups?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizes_select".
+ */
+export interface SizesSelect<T extends boolean = true> {
+  isVisibleInMenu?: T;
+  name?: T;
+  price?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garnishes_select".
+ */
+export interface GarnishesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  price?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garnish-groups_select".
+ */
+export interface GarnishGroupsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  mandatory?: T;
+  maxQuantity?: T;
+  minQuantity?: T;
+  multipleSelection?: T;
+  garnishes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
