@@ -42,5 +42,5 @@ next-env.d.ts
 
 /media
 
-# package.json
-# package-lock.json
+package.json
+package-lock.json
