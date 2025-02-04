@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Plate } from '../payload-types'
+import type { Plate, Size, GarnishGroup } from '../payload-types'
 
 export class PlatesService {
   private static async getPayloadClient() {
@@ -15,7 +15,45 @@ export class PlatesService {
       const plate = await payload.findByID({
         collection: 'plates',
         id,
+        depth: 2,
       })
+
+      if (plate.sizes && Array.isArray(plate.sizes)) {
+        plate.sizes = await Promise.all(
+          plate.sizes.map(async (sizeId) => {
+            const size = await payload.findByID({ collection: 'sizes', id: sizeId as string })
+            return {
+              id: size.id,
+              name: size.name,
+              price: size.price,
+              isVisibleInMenu: size.isVisibleInMenu,
+            } as Size
+          }),
+        )
+      }
+
+      if (plate.garnishGroups && Array.isArray(plate.garnishGroups)) {
+        plate.garnishGroups = await Promise.all(
+          plate.garnishGroups.map(async (groupId) => {
+            const group = await payload.findByID({
+              collection: 'garnish-groups',
+              id: groupId as string,
+              depth: 1,
+            })
+            return {
+              id: group.id,
+              name: group.name,
+              description: group.description,
+              mandatory: group.mandatory,
+              maxQuantity: group.maxQuantity,
+              minQuantity: group.minQuantity,
+              multipleSelection: group.multipleSelection,
+              garnishes: group.garnishes,
+            } as GarnishGroup
+          }),
+        )
+      }
+
       return plate as Plate
     } catch (error) {
       console.error('Error in findById:', error)
