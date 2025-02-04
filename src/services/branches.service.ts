@@ -29,7 +29,7 @@ export class BranchesService {
       return await payload.find({
         collection: 'branches',
         where: {
-          comercio: { equals: merchantId }, // Basado en la relación en el esquema de Branches
+          comercio: { equals: merchantId },
         },
       })
     } catch (error: any) {
