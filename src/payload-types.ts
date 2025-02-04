@@ -21,6 +21,7 @@ export interface Config {
     sizes: Size;
     garnishes: Garnish;
     'garnish-groups': GarnishGroup;
+    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -36,6 +37,7 @@ export interface Config {
     sizes: SizesSelect<false> | SizesSelect<true>;
     garnishes: GarnishesSelect<false> | GarnishesSelect<true>;
     'garnish-groups': GarnishGroupsSelect<false> | GarnishGroupsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -247,6 +249,39 @@ export interface Garnish {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  orderNumber?: string | null;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  items?:
+    | {
+        plate: string | Plate;
+        size?: (string | null) | Size;
+        garnishes?: (string | Garnish)[] | null;
+        quantity: number;
+        price: number;
+        totalPrice?: number | null;
+        observations?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  status?: ('pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled') | null;
+  paymentMethod: 'cash' | 'bank-transfer' | 'credit-card';
+  orderDate?: string | null;
+  notes?: string | null;
+  totalAmount?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -287,6 +322,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'garnish-groups';
         value: string | GarnishGroup;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
       } | null);
   globalSlug?: string | null;
   user:
@@ -477,6 +516,40 @@ export interface GarnishGroupsSelect<T extends boolean = true> {
   minQuantity?: T;
   multipleSelection?: T;
   garnishes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
+  customer?:
+    | T
+    | {
+        name?: T;
+        email?: T;
+        phone?: T;
+        address?: T;
+      };
+  items?:
+    | T
+    | {
+        plate?: T;
+        size?: T;
+        garnishes?: T;
+        quantity?: T;
+        price?: T;
+        totalPrice?: T;
+        observations?: T;
+        id?: T;
+      };
+  status?: T;
+  paymentMethod?: T;
+  orderDate?: T;
+  notes?: T;
+  totalAmount?: T;
   updatedAt?: T;
   createdAt?: T;
 }
