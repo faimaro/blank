@@ -11,12 +11,12 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Merchants } from './collections/Merchants'
 import { Branches } from './collections/Branches'
-import {Categories} from './collections/Categories'
-import { Plates } from './collections/Plates'
+import { Categories } from './collections/Categories'
+import { Plates } from './services/Plates'
 import { Sizes } from './collections/Sizes'
-import {Garnishes} from './collections/Garnishes'
-import {GarnishGroups} from './collections/GarnishGroups'
-import {Orders} from './collections/Orders'
+import { Garnishes } from './collections/Garnishes'
+import { GarnishGroups } from './collections/GarnishGroups'
+import { Orders } from './collections/Orders'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +28,18 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media,Merchants,Branches,Categories,Plates,Sizes,Garnishes,GarnishGroups,Orders],
+  collections: [
+    Users,
+    Media,
+    Merchants,
+    Branches,
+    Categories,
+    Plates,
+    Sizes,
+    Garnishes,
+    GarnishGroups,
+    Orders,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -43,6 +54,5 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
-    
   ],
 })
