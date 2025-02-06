@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Merchant } from '../payload-types'
+import type { Merchant } from '@/payload-types'
 
 export class MerchantsService {
   private static async getPayloadClient() {

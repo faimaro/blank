@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Branch } from '../payload-types'
+import type { Branch } from '@/payload-types'
 
 export class BranchesService {
   private static async getPayloadClient() {

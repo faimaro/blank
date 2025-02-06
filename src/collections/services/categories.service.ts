@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Category } from '../payload-types'
+import type { Category } from '@/payload-types'
 
 export class CategoriesService {
   private static async getPayloadClient() {

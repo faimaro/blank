@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Plate, Size, GarnishGroup } from '../payload-types'
+import type { Plate, Size, GarnishGroup } from '@/payload-types'
 
 export class PlatesService {
   private static async getPayloadClient() {
