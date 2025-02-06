@@ -1,6 +1,6 @@
 import { Endpoint } from 'payload'
 import { NextResponse } from 'next/server'
-import { PlatesService } from '../services/plates.service'
+import { PlatesService } from './services/plates.service'
 
 const PlatesEndpoint: Endpoint[] = [
   {
