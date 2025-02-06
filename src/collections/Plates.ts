@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import PlatesEndpoint from './endpoints/plates.endpoint'
 import platesFields from './fields/plates.fields'
 
 export const Plates: CollectionConfig = {
@@ -13,6 +14,7 @@ export const Plates: CollectionConfig = {
     delete: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden eliminar
   },
   fields: platesFields,
+  endpoints: PlatesEndpoint,
 }
 
 export default Plates
