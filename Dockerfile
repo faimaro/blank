@@ -29,6 +29,9 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Verificamos que la carpeta dist exista después de la construcción
+RUN test -d dist || (echo "Error: 'dist' folder not found after build" && exit 1)
+
 # Etapa de producción
 FROM base AS runner
 WORKDIR /app
