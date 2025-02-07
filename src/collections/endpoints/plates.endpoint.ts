@@ -8,6 +8,7 @@ const PlatesEndpoint: Endpoint[] = [
     method: 'get',
     handler: async (req) => {
       try {
+        console.log(req)
         const body = req.data
         if (!body || typeof body !== 'object') {
           return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
@@ -52,6 +53,7 @@ const PlatesEndpoint: Endpoint[] = [
     method: 'get',
     handler: async (req) => {
       try {
+        console.log(req)
         const id = req.routeParams?.id
 
         if (!id || typeof id !== 'string' || id.trim() === '') {
