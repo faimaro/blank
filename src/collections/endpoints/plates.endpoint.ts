@@ -1,4 +1,4 @@
-import { Endpoint } from 'payload'
+import { Endpoint, PayloadRequest } from 'payload'
 import { NextResponse } from 'next/server'
 import { PlatesService } from './services/plates.service'
 
@@ -51,10 +51,11 @@ const PlatesEndpoint: Endpoint[] = [
   {
     path: '/:id',
     method: 'get',
-    handler: async (req) => {
+    handler: async (req: PayloadRequest) => {
       try {
-        console.log(req)
-        const id = req.routeParams?.id
+        console.log('Request received:', req.url, req.data)
+
+        const id = req.data?.id || req.query?.id
 
         if (!id || typeof id !== 'string' || id.trim() === '') {
           return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
@@ -68,7 +69,7 @@ const PlatesEndpoint: Endpoint[] = [
 
         return NextResponse.json(plate)
       } catch (error: any) {
-        console.error('Error fetching plate', error?.message)
+        console.error('Error fetching plate:', error?.message)
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
       }
     },
