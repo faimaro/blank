@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import orderFields from './fields/order.fields'
-import OrderEndpoint from './endpoints/order.endpiont'
+import OrderEndpoint from './endpoints/order.endpoint'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',

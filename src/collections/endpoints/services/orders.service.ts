@@ -83,6 +83,8 @@ export class OrderService {
         data: newOrder,
       })
 
+      console.log(savedOrder)
+
       return savedOrder
     } catch (error) {
       console.error('Error creating order:', error)
