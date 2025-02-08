@@ -1,41 +1,20 @@
 import type { CollectionConfig } from 'payload'
+import linksFields from './fields/links.fields'
+import LinkEndpoint from './endpoints/links.endpoint'
 // Colección de Links
 export const Links: CollectionConfig = {
   slug: 'links', // Nombre de la colección
   admin: {
     useAsTitle: 'nombre', // Campo que se mostrará como título en el panel de administración
   },
-  fields: [
-    {
-      name: 'nombre',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'url',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'descripcion',
-      type: 'textarea',
-      required: false,
-    },
-    {
-      name: 'icono',
-      type: 'upload',
-      relationTo: 'media', // Asegúrate de tener una colección llamada 'media' para manejar archivos
-      required: false,
-    },
-    {
-      name: 'merchant',
-      type: 'relationship',
-      relationTo: 'merchants', // Relación con la colección de merchants
-      required: true,
-    },
-  ],
-};
+  access: {
+    read: () => true, // Cualquier usuario puede leer los datos (ajusta según tus necesidades)
+    create: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden crear pedidos
+    update: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden actualizar pedidos
+    delete: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden eliminar pedidos
+  },
+  fields: linksFields, // Campos de la colección
+  endpoints: LinkEndpoint, // Endpoints de la colección
+}
 
-
-
-export default [Links];
+export default [Links]
