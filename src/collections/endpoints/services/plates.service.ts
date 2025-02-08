@@ -12,49 +12,53 @@ export class PlatesService {
   static async findById(id: string): Promise<Plate | null> {
     try {
       const payload = await this.getPayloadClient()
-      const plate = await payload.findByID({
+      const plate = (await payload.findByID({
         collection: 'plates',
         id,
         depth: 2,
-      })
+      })) as Plate
 
       if (plate.sizes && Array.isArray(plate.sizes)) {
-        plate.sizes = await Promise.all(
-          plate.sizes.map(async (sizeId) => {
-            const size = await payload.findByID({ collection: 'sizes', id: sizeId as string })
+        plate.sizes = plate.sizes.map((size): Size | string => {
+          if (typeof size === 'string') {
+            return size
+          } else if (typeof size === 'object' && size !== null) {
             return {
               id: size.id,
+              isVisibleInMenu: size.isVisibleInMenu ?? null,
               name: size.name,
               price: size.price,
-              isVisibleInMenu: size.isVisibleInMenu,
-            } as Size
-          }),
-        )
+              updatedAt: size.updatedAt || new Date().toISOString(),
+              createdAt: size.createdAt || new Date().toISOString(),
+            }
+          }
+          return size as string // Fallback, aunque no debería ocurrir
+        })
       }
 
       if (plate.garnishGroups && Array.isArray(plate.garnishGroups)) {
-        plate.garnishGroups = await Promise.all(
-          plate.garnishGroups.map(async (groupId) => {
-            const group = await payload.findByID({
-              collection: 'garnish-groups',
-              id: groupId as string,
-              depth: 1,
-            })
+        plate.garnishGroups = plate.garnishGroups.map((group): GarnishGroup | string => {
+          if (typeof group === 'string') {
+            return group
+          } else if (typeof group === 'object' && group !== null) {
             return {
               id: group.id,
               name: group.name,
-              description: group.description,
-              mandatory: group.mandatory,
-              maxQuantity: group.maxQuantity,
-              minQuantity: group.minQuantity,
-              multipleSelection: group.multipleSelection,
-              garnishes: group.garnishes,
-            } as GarnishGroup
-          }),
-        )
+              description: group.description ?? null,
+              mandatory: group.mandatory ?? null,
+              maxQuantity: group.maxQuantity ?? null,
+              minQuantity: group.minQuantity ?? null,
+              multipleSelection: group.multipleSelection ?? null,
+              garnishes: group.garnishes ?? null,
+              updatedAt: group.updatedAt || new Date().toISOString(),
+              createdAt: group.createdAt || new Date().toISOString(),
+            }
+          }
+          return group as string // Fallback, aunque no debería ocurrir
+        })
       }
 
-      return plate as Plate
+      return plate
     } catch (error) {
       console.error('Error in findById:', error)
       return null

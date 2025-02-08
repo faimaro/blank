@@ -53,9 +53,7 @@ const PlatesEndpoint: Endpoint[] = [
     method: 'get',
     handler: async (req: PayloadRequest) => {
       try {
-        console.log('Request received:', req.url, req.data)
-
-        const id = req.data?.id || req.query?.id
+        const id = req.routeParams?.id
 
         if (!id || typeof id !== 'string' || id.trim() === '') {
           return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
