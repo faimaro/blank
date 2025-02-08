@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Order } from '@/payload-types'
+import type { Order, Plate } from '@/payload-types'
 
 // Función auxiliar para generar un ID único (puedes cambiar esto según tu implementación)
 const generateUniqueId = (): string =>
@@ -61,33 +61,19 @@ export class OrderService {
   }
 
   static async createOrder(
-    plateId: string,
-    branchId: number,
-    sizeId: string | null,
-    garnishGroup: string[],
+    items: Array<{ plate: string | Plate; quantity: number; price: number }>,
+    customers: { name: string; email: string; phone: string; address: string },
+    paymentMethod: 'cash' | 'bank-transfer' | 'credit-card',
   ): Promise<Order | null> {
     try {
       const payload = await this.getPayloadClient()
 
       const newOrder: Order = {
         id: generateUniqueId(), // Función para generar un ID único
-        customer: {
-          name: 'John Doe', // Datos del cliente (puedes obtenerlos del request)
-          email: 'johndoe@example.com',
-          phone: '123456789',
-          address: '123 Main St',
-        },
-        items: [
-          {
-            plate: plateId, // `plate` es el ID del plato, no `plateId`
-            size: sizeId || null, // `size` es opcional
-            garnishes: garnishGroup, // `garnishes` es un array
-            quantity: 1,
-            price: 10, // Ajusta esto según tu lógica de negocio
-          },
-        ],
+        customer: customers, // Ahora tiene el tipo correcto
+        items: items, // items ahora tiene la estructura correcta
         status: 'pending',
-        paymentMethod: 'cash', // Define la lógica de pago
+        paymentMethod: paymentMethod, // Se pasa correctamente el método de pago
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       }

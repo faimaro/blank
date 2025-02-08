@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import orderFields from './fields/order.fields'
+import OrderEndpoint from './endpoints/order.endpiont'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -13,6 +14,7 @@ export const Orders: CollectionConfig = {
     delete: ({ req: { user } }) => Boolean(user), // Solo usuarios autenticados pueden eliminar pedidos
   },
   fields: orderFields,
+  endpoints: OrderEndpoint,
 }
 
 export default Orders
