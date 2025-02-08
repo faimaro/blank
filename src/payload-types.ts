@@ -22,6 +22,7 @@ export interface Config {
     garnishes: Garnish;
     'garnish-groups': GarnishGroup;
     orders: Order;
+    links: Link;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -38,6 +39,7 @@ export interface Config {
     garnishes: GarnishesSelect<false> | GarnishesSelect<true>;
     'garnish-groups': GarnishGroupsSelect<false> | GarnishGroupsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    links: LinksSelect<false> | LinksSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -282,6 +284,20 @@ export interface Order {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links".
+ */
+export interface Link {
+  id: string;
+  nombre: string;
+  url: string;
+  descripcion?: string | null;
+  icono?: (string | null) | Media;
+  merchant: string | Merchant;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -326,6 +342,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'orders';
         value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'links';
+        value: string | Link;
       } | null);
   globalSlug?: string | null;
   user:
@@ -550,6 +570,19 @@ export interface OrdersSelect<T extends boolean = true> {
   orderDate?: T;
   notes?: T;
   totalAmount?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links_select".
+ */
+export interface LinksSelect<T extends boolean = true> {
+  nombre?: T;
+  url?: T;
+  descripcion?: T;
+  icono?: T;
+  merchant?: T;
   updatedAt?: T;
   createdAt?: T;
 }

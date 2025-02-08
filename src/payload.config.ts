@@ -16,6 +16,7 @@ import { Sizes } from './collections/Sizes'
 import { Garnishes } from './collections/Garnishes'
 import { GarnishGroups } from './collections/GarnishGroups'
 import { Orders } from './collections/Orders'
+import { Links } from './collections/Links'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -38,6 +39,7 @@ export default buildConfig({
     Garnishes,
     GarnishGroups,
     Orders,
+    Links
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
