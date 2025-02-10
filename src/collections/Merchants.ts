@@ -14,6 +14,12 @@ export const Merchants: CollectionConfig = {
       required: true, // Campo obligatorio
     },
     {
+      name: 'slug',
+      type: 'text',
+      label: 'slug para web',
+      required: true, // Campo obligatorio
+    },
+    {
       name: 'email',
       type: 'email',
       label: 'Correo Electrónico',

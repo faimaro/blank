@@ -141,6 +141,7 @@ export interface Media {
 export interface Merchant {
   id: string;
   name: string;
+  slug: string;
   phone?: string | null;
   address?: string | null;
   isActive?: boolean | null;
@@ -438,6 +439,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface MerchantsSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   phone?: T;
   address?: T;
   isActive?: T;
