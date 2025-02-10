@@ -123,4 +123,36 @@ export class MerchantsService {
       return false
     }
   }
+  
+  static async findBySlug(slug: string) {
+    try {
+      if (!slug.trim()) throw new Error('Invalid slug')
+
+      const payload = await this.getPayloadClient()
+      const response = await payload.find({
+        collection: 'merchants',
+        slug: {
+          contains: slug,
+        },
+        depth: 2,
+      })
+
+      if (!response.docs || response.docs.length === 0) {
+        return null
+      }
+
+      const merchant = response.docs[0]
+
+      return {
+        merchant: {
+          ...merchant,
+        },
+        branches: merchant.branches || [],
+        links: merchant.links || [],
+      }
+    } catch (error: any) {
+      console.error(`Error fetching merchant by slug (${slug}):`, error?.message)
+      return null
+    }
+  }
 }
