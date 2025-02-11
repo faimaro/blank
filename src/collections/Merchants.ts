@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
 
 export const Merchants: CollectionConfig = {
   slug: 'merchants',
@@ -11,6 +11,12 @@ export const Merchants: CollectionConfig = {
       name: 'name',
       type: 'text',
       label: 'Nombre del Comerciante',
+      required: true, // Campo obligatorio
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      label: 'slug para web',
       required: true, // Campo obligatorio
     },
     {
@@ -37,6 +43,4 @@ export const Merchants: CollectionConfig = {
       defaultValue: true, // Por defecto estará activo
     },
   ],
-};
-
-
+}
