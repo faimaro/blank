@@ -145,7 +145,11 @@ export class MerchantsService {
 
       const merchant = response.docs[0]
 
-      return merchant
+      return {
+        merchant: {
+          ...merchant,
+        },
+      }
     } catch (error: any) {
       console.error(`Error fetching merchant by slug (${slug}):`, error?.message)
       return null
