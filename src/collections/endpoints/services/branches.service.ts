@@ -123,4 +123,71 @@ export class BranchesService {
       return false
     }
   }
+
+  static async findBySlug(slug: string) {
+    try {
+      if (!slug?.trim()) {
+        throw new Error('Slug is required')
+      }
+
+      const payload = await this.getPayloadClient()
+      const query = {
+        collection: 'branches',
+        where: {
+          alias: {
+            equals: slug.toLowerCase().trim(),
+          },
+          isActive: {
+            equals: true,
+          },
+        },
+        depth: 2,
+        limit: 1,
+        populate: {
+          plates: {
+            sort: 'name',
+            where: {
+              AND: [
+                {
+                  isActive: {
+                    equals: true,
+                  },
+                },
+              ],
+            },
+            populate: {
+              garnishGroups: {
+                populate: {
+                  garnishes: true,
+                },
+              },
+              sizes: {
+                where: {
+                  isActive: {
+                    equals: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+
+      const data = await payload.find(query)
+
+      // Validación de resultados
+      if (!data?.docs?.length) {
+        console.warn(`No active branch found with slug: ${slug}`)
+        return null
+      }
+
+      return data
+    } catch (error: any) {
+      console.error(`Error in findBySlug (${slug}):`, {
+        message: error?.message,
+        stack: error?.stack,
+      })
+      throw new Error(`Failed to fetch branch: ${error?.message}`)
+    }
+  }
 }
