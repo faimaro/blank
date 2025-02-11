@@ -26,6 +26,13 @@ const branchesFields: Field[] = [
     label: 'Comercio',
     required: true,
   },
+  {
+    name: 'plates',
+    type: 'relationship',
+    relationTo: 'plates',
+    hasMany: true,
+    label: 'Platos disponibles',
+  },
 ]
 
 export default branchesFields
