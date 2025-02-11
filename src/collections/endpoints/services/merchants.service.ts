@@ -149,8 +149,6 @@ export class MerchantsService {
         merchant: {
           ...merchant,
         },
-        branches: merchant.branches || [],
-        links: merchant.links || [],
       }
     } catch (error: any) {
       console.error(`Error fetching merchant by slug (${slug}):`, error?.message)
