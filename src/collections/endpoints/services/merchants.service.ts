@@ -123,7 +123,7 @@ export class MerchantsService {
       return false
     }
   }
-  
+
   static async findBySlug(slug: string) {
     try {
       if (!slug.trim()) throw new Error('Invalid slug')
@@ -131,8 +131,10 @@ export class MerchantsService {
       const payload = await this.getPayloadClient()
       const response = await payload.find({
         collection: 'merchants',
-        slug: {
-          contains: slug,
+        where: {
+          slug: {
+            contains: slug,
+          },
         },
         depth: 2,
       })
