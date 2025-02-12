@@ -131,51 +131,21 @@ export class BranchesService {
       }
 
       const payload = await this.getPayloadClient()
-      const query = {
+
+      const data = await payload.find({
         collection: 'branches',
         where: {
-          alias: {
-            equals: slug.toLowerCase().trim(),
+          slug: {
+            equals: slug,
           },
           isActive: {
             equals: true,
           },
         },
-        depth: 2,
+        depth: 3,
         limit: 1,
-        populate: {
-          plates: {
-            sort: 'name',
-            where: {
-              AND: [
-                {
-                  isActive: {
-                    equals: true,
-                  },
-                },
-              ],
-            },
-            populate: {
-              garnishGroups: {
-                populate: {
-                  garnishes: true,
-                },
-              },
-              sizes: {
-                where: {
-                  isActive: {
-                    equals: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-      }
+      })
 
-      const data = await payload.find(query)
-
-      // Validación de resultados
       if (!data?.docs?.length) {
         console.warn(`No active branch found with slug: ${slug}`)
         return null

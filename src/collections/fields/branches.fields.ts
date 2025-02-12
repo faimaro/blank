@@ -8,6 +8,12 @@ const branchesFields: Field[] = [
     required: true, // Campo obligatorio
   },
   {
+    name: 'slug',
+    type: 'text',
+    label: 'slug para web',
+    required: true, // Campo obligatorio
+  },
+  {
     name: 'address',
     type: 'textarea',
     label: 'Dirección',
